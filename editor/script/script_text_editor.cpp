@@ -2229,6 +2229,7 @@ static String _quote_drop_data(const String &str) {
 	return escaped.quote(using_single_quotes ? "'" : "\"");
 }
 
+// Jalon : Fonction qui construit le string membre
 static String _get_dropped_resource_as_member(const Ref<Resource> &p_resource, bool p_create_field, bool p_allow_uid) {
 	String path = p_resource->get_path();
 	if (p_allow_uid) {
@@ -2248,6 +2249,7 @@ static String _get_dropped_resource_as_member(const Ref<Resource> &p_resource, b
 		variable_name = p_resource->get_path().get_file().get_basename();
 	}
 
+	// Jalon : bah c'est un mensonge ça snale case dans mes script justement, pas pascal case
 	if (is_script) {
 		variable_name = variable_name.to_pascal_case().validate_unicode_identifier();
 	} else {
@@ -2326,6 +2328,7 @@ void ScriptTextEditor::drop_data_fw(const Point2 &p_point, const Variant &p_data
 			return;
 		}
 
+		// JALON : Drag and drop avec ctrl pressé
 		if (member_drop_modifier_pressed) {
 			if (resource->is_built_in()) {
 				String warning = TTR("Preloading internal resources is not supported.");
