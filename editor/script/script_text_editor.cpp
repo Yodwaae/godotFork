@@ -2249,7 +2249,7 @@ static String _get_dropped_resource_as_member(const Ref<Resource> &p_resource, b
 		variable_name = p_resource->get_path().get_file().get_basename();
 	}
 
-	// Jalon : bah c'est un mensonge ça snale case dans mes script justement, pas pascal case
+	// Jalon : bah c'est un mensonge ça snake case dans mes script justement, pas pascal case
 	if (is_script) {
 		variable_name = variable_name.to_pascal_case().validate_unicode_identifier();
 	} else {
@@ -2427,6 +2427,7 @@ void ScriptTextEditor::drop_data_fw(const Point2 &p_point, const Variant &p_data
 					}
 				}
 
+				// JALON C ICI !!!!!!!!
 				String variable_name = String(node->get_name()).to_snake_case().validate_unicode_identifier();
 				if (use_type) {
 					StringName class_name = node->get_class_name();
