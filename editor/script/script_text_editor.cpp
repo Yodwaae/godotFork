@@ -2229,7 +2229,6 @@ static String _quote_drop_data(const String &str) {
 	return escaped.quote(using_single_quotes ? "'" : "\"");
 }
 
-// Jalon : Fonction qui construit le string membre
 static String _get_dropped_resource_as_member(const Ref<Resource> &p_resource, bool p_create_field, bool p_allow_uid) {
 	String path = p_resource->get_path();
 	if (p_allow_uid) {
@@ -2249,7 +2248,6 @@ static String _get_dropped_resource_as_member(const Ref<Resource> &p_resource, b
 		variable_name = p_resource->get_path().get_file().get_basename();
 	}
 
-	// Jalon : bah c'est un mensonge ça snake case dans mes script justement, pas pascal case
 	if (is_script) {
 		variable_name = variable_name.to_pascal_case().validate_unicode_identifier();
 	} else {
@@ -2328,7 +2326,6 @@ void ScriptTextEditor::drop_data_fw(const Point2 &p_point, const Variant &p_data
 			return;
 		}
 
-		// JALON : Drag and drop avec ctrl pressé
 		if (member_drop_modifier_pressed) {
 			if (resource->is_built_in()) {
 				String warning = TTR("Preloading internal resources is not supported.");
@@ -2427,8 +2424,25 @@ void ScriptTextEditor::drop_data_fw(const Point2 &p_point, const Variant &p_data
 					}
 				}
 
-				// JALON C ICI !!!!!!!!
-				String variable_name = String(node->get_name()).to_snake_case().validate_unicode_identifier();
+				// JALON C ICI !!!!!!!! // MY CHANGES
+				String variable_name = String(node->get_name());
+
+				int naming_convention = (int)EDITOR_GET("project_manager/dropped_node_naming_convention");
+				switch (naming_convention) {
+					case 0: // snake_case
+						variable_name = variable_name.to_snake_case().validate_unicode_identifier();
+						break;
+					case 1: // camelCase
+						variable_name = variable_name.to_camel_case().validate_unicode_identifier();
+						break;
+					case 2: // PascalCase
+						variable_name = variable_name.to_pascal_case().validate_unicode_identifier();
+						break;
+					default:
+						ERR_FAIL_MSG("Invalid dropped node naming convention.");
+						break;
+				}
+
 				if (use_type) {
 					StringName class_name = node->get_class_name();
 					Ref<Script> node_script = node->get_script();

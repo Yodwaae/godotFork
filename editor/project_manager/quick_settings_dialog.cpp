@@ -49,7 +49,7 @@ void QuickSettingsDialog::_fetch_setting_values() {
 	editor_network_modes.clear();
 	editor_check_for_updates.clear();
 	editor_directory_naming_conventions.clear();
-	editor_dropped_node_naming_convention.clear();
+	editor_dropped_node_naming_convention.clear(); // MYCHANGES
 
 	{
 		List<PropertyInfo> editor_settings_properties;
@@ -70,7 +70,7 @@ void QuickSettingsDialog::_fetch_setting_values() {
 				editor_check_for_updates = pi.hint_string.split(",");
 			} else if (pi.name == "project_manager/directory_naming_convention") {
 				editor_directory_naming_conventions = pi.hint_string.split(",");
-			} else if (pi.name == "project_manager/dropped_node_naming_convention") {
+			} else if (pi.name == "project_manager/dropped_node_naming_convention") { //MYCHANGES
 				editor_dropped_node_naming_convention = pi.hint_string.split(",");
 			}
 		}
@@ -152,7 +152,6 @@ void QuickSettingsDialog::_update_current_values() {
 		}
 	}
 
-	// JALON Et là aussi
 	// Project directory naming options.
 	{
 		const int current_directory_naming = EDITOR_GET("project_manager/directory_naming_convention");
@@ -166,7 +165,7 @@ void QuickSettingsDialog::_update_current_values() {
 		}
 	}
 
-	// JALON Et là aussi
+	// MYCHANGES
 	// Dropped node naming options.
 	{
 		const int current_directory_naming = EDITOR_GET("project_manager/dropped_node_naming_convention");
@@ -227,6 +226,7 @@ void QuickSettingsDialog::_directory_naming_convention_selected(int p_id) {
 	_set_setting_value("project_manager/directory_naming_convention", p_id);
 }
 
+//MYCHANGES
 void QuickSettingsDialog::_dropped_node_naming_convention(int p_id) {
 	_set_setting_value("project_manager/dropped_node_naming_convention", p_id);
 }
@@ -383,7 +383,6 @@ QuickSettingsDialog::QuickSettingsDialog() {
 			_add_setting_control(TTRC("Check for Updates"), check_for_update_button);
 		}
 
-		// JALON ICI POUR AJOUTER UNE OPTION
 		// Project directory naming options.
 		{
 			directory_naming_convention_button = memnew(OptionButton);
@@ -400,7 +399,7 @@ QuickSettingsDialog::QuickSettingsDialog() {
 
 		// JALON Ok là je fais le code mais en fait faut que je pose cette option autre
 		// Dropped node naming options.
-		{
+		{ //MYCHANGES
 			dropped_node_naming_convention_button = memnew(OptionButton);
 			dropped_node_naming_convention_button->set_fit_to_longest_item(false);
 			dropped_node_naming_convention_button->connect(SceneStringName(item_selected), callable_mp(this, &QuickSettingsDialog::_dropped_node_naming_convention));
