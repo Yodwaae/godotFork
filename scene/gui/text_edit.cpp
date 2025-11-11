@@ -595,6 +595,7 @@ void TextEdit::Text::set_use_default_word_separators(bool p_enabled) {
 	invalidate_all_lines();
 }
 
+// Jalon : Ici aussi
 void TextEdit::Text::set_use_custom_word_separators(bool p_enabled) {
 	if (use_custom_word_separators == p_enabled) {
 		return;
